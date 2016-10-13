@@ -200,6 +200,10 @@ def print_menu(exits, room_items, inv_items):
     for direction in exits:
         # Print the exit name and where it leads to
         print_exit(direction, exit_leads_to(exits, direction))
+    for item in room_items:
+        print("Take " + item["id"].upper() + " to take " + item["name"] + ".") #id and name comes from item.py
+    for item in inv_items:
+        print("Drop " + item["id"].upper() + " to drop " + item["name"] + ".")
 
     #
     # COMPLETE ME!
@@ -233,7 +237,12 @@ def execute_go(direction):
     (and prints the name of the room into which the player is
     moving). Otherwise, it prints "You cannot go there."
     """
-    pass
+    global current_room #global is taking it out from the function at the bottom
+    if direction in current_room["exits"]:
+        current_room = move(current_room["exits"], direction)
+        print(current_room["name"].upper())
+    else:
+        print("You cannot go there.")
 
 
 def execute_take(item_id):
@@ -242,7 +251,16 @@ def execute_take(item_id):
     there is no such item in the room, this function prints
     "You cannot take that."
     """
-    pass
+    item_exist = False
+    for item in current_room["items"]:
+        if item_id == item["id"]:
+            item_exist = True
+            current_room["items"].remove(item)
+            inventory.append(item)
+            print(item["name"] + " added to inventory")
+    else:
+        print("You cannot take that.")
+
     
 
 def execute_drop(item_id):
@@ -250,7 +268,18 @@ def execute_drop(item_id):
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
-    pass
+    item_exist = False
+
+    for item in inventory:
+        if item_id == item["id"]:
+            in_inv = True
+            current_room["items"].append(item)
+            inventory.remove(item)
+            print(item["name"] + " dropped from inventory.")
+
+        elif in_inv == False:
+            print("You cannot drop that.")
+
     
 
 def execute_command(command):
