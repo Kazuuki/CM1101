@@ -24,9 +24,9 @@ def list_of_items(items):
     'money, a student handbook, laptop'
 
     """
-    my_items = []
-    for i in items:
-        my_items.append(i["name"])
+    my_items = []#list
+    for i in items: #for however many things there are in (items) will keep looping i = items.py i is a variable in the loop
+        my_items.append(i["name"])#add it to the back it will append it into the list "name" = items.py
     return(", ".join(my_items))#"," seperates the items in the list
 
 
@@ -252,8 +252,8 @@ def execute_take(item_id):
     "You cannot take that."
     """
     item_exist = False
-    for item in current_room["items"]:
-        if item_id == item["id"]:
+    for item in current_room["items"]:#item is the index to loop
+        if item_id == item["id"]: #== comparing = taking the value. if i == x, they are compared and will check if the statement is true else if not true else:
             item_exist = True
             current_room["items"].remove(item)
             inventory.append(item)
@@ -268,7 +268,7 @@ def execute_drop(item_id):
     player's inventory to list of items in the current room. However, if there is
     no such item in the inventory, this function prints "You cannot drop that."
     """
-    item_exist = False
+    in_inv = False
 
     for item in inventory:
         if item_id == item["id"]:
@@ -331,9 +331,9 @@ def menu(exits, room_items, inv_items):
     user_input = input("> ")
 
     # Normalise the input
-    normalised_user_input = normalise_input(user_input)
+    normalised_user_input = normalise_input(user_input) #normalised_user_input = variable, assigning the value to a variable. #if user types eaSt it will still read and will normalise.
 
-    return normalised_user_input
+    return normalised_user_input #whatever calls for menu, it will return normalised_user_input
 
 
 def move(exits, direction):
@@ -350,7 +350,7 @@ def move(exits, direction):
     """
 
     # Next room to go to
-    return rooms[exits[direction]]
+    return rooms[exits[direction]]# list within a list. is room then NESW 2D.
 
 
 # This is the entry point of our program
